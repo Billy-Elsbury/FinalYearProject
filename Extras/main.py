@@ -3,14 +3,11 @@ import time
 import keyboard
 import math
 
-
 def ease_out_cubic(t):
     return 1 - math.pow(1 - t, 3)
 
-
 def move_mouse(dx, dy):
     ctypes.windll.user32.mouse_event(0x0001, int(dx), int(dy), 0, 0)
-
 
 def step_back(duration=3):
     print("Step back.")
@@ -18,7 +15,6 @@ def step_back(duration=3):
     time.sleep(duration)
     keyboard.release('s')
     print("Step back finished.")
-
 
 class PhotogrammetryCapture:
     def __init__(self, camera_speed=float(0), vertical_offset=0):
@@ -44,7 +40,8 @@ class PhotogrammetryCapture:
 
             #vertical offset during the first second of the orbit
             if vertical_direction != 0 and elapsed_time <= 1:
-                move = int(vertical_direction * self.vertical_offset * ease) - int(vertical_direction * self.vertical_offset * ease_out_cubic(progress - 0.01))
+                move = (int(vertical_direction * self.vertical_offset * ease)
+                        - int(vertical_direction * self.vertical_offset * ease_out_cubic(progress - 0.01)))
                 move_mouse(0, move)
 
             keyboard.press('d')
